@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% dump produits %}
+
+{% block body %}
+
+{# Ajouter un style css #}
+<style>
+div.menu a{
+    display:inline-block;
+    margin: 0 20px;
+    color: blue;
+}
+</style>
+
+<div class="menu">
+    {% for categorie in categories %}
+    <a href="{{path('get_produit', {'categorie': categorie})}}">
+        {{ categorie }}
+    </a>
+    {% endfor %}
+</div>
+
+<h1>Liste des produits : {{ titre }} ({{ produits|length }})</h1>
+
+{% if produits|length == 0 %}
+    <div style="color:red;">Aucun produit trouvé !</div>
+{% else %}
+    <ul>
+    {% for produit in produits %}
+        <li>{{ produit }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}
+
+{# Changer the titre de la page #}
+{% block title %}
+    {% if titre == "vide" %}
+        Aucun catégorie sélectionnée
+    {% else %}
+        {{ titre }}
+    {% endif %}
+{% endblock %}
